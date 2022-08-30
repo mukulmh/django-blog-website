@@ -1,0 +1,48 @@
+{% extends 'blogbase.html' %}
+
+{% block content %}
+
+<div class="wrap full-wrap">
+    <div class="main-wrap">
+        <section class="main">
+
+            <div>
+                <article class="post result">
+                    <div class="inner">
+                        <h1 class="searching">Categories</h1>
+                        <p>Find your desired category</p>
+                    </div>
+                </article>
+            </div>
+
+            <div class="related-posts">
+
+                <div class="posts">
+                    {% for category in categories %}
+                    <aside class="related post has-post-thumbnail">
+
+                        <span class="post-image">
+                            <a href="#" title="{{category.name}}">
+                                <img width="468" height="468" src="{{category.image.url}}" alt=""></a>
+                        </span>
+
+
+                        <div class="inner">
+                            <h6 class="entry-title">
+                                <a href="#" title="{{category.name}}">
+                                    {{category.name}}
+                                </a>
+                            </h6>
+                        </div>
+                    </aside>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </section>
+
+    </div><!-- /main-wrap -->
+
+</div><!-- /wrap -->
+
+{% endblock %}

@@ -1,0 +1,193 @@
+{% extends 'blogbase.html' %}
+
+{% block content %}
+<div class="hero" style="background-image: url('/static/itsy/images/main.jpg'); text-align:right;">
+    <div class="hero-inner">
+        <div class="inner">
+            <h1><span class="border border-top border-bottom">itsy</span></h1>
+            <div class="hero-line-one"></div>
+            <div class="hero-line-two"><span class="border border-bottom"><a href="https://freehtml5.co"
+                        style="color:#FFF;">by FreeHTML5</a></span></div>
+        </div>
+
+        <a class="more-arrow" href="#content"><i class="fa fa-chevron-down"></i><span>Scroll Down</span></a>
+
+    </div>
+</div>
+<div class="home-sticky" id="content">
+
+    <h2 class="home-sticky-title">fan favourites</h2>
+
+    {% for post in top_posts %}
+    <div class="sticky-inner">
+
+        <!-- top blogs -->
+
+        <aside class="home-sticky-post post has-post-thumbnail sticky ">
+
+            <span class="post-image">
+                <a href="/blog/single/{{post.id}}">
+                    <img width="502" height="502" src="{{post.image.url}}" class="attachment-sticky size-sticky"
+                        alt="" />
+                </a>
+            </span>
+
+            <div class="inner">
+                <h3 class="entry-title">
+                    <a href="/blog/single/{{post.id}}">{{post.title}}</a>
+                </h3>
+
+                <ul class="meta top">
+                    <li class="time">
+                        <a href="/blog/single/{{post.id}}" title="{{post.title}}">
+                            <time class="post-date updated" datetime="2015-01-31">By: {{post.author}}</time>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </aside>
+
+    </div>
+    {% endfor %}
+
+
+</div>
+<div class="wrap full-wrap">
+    <div class="main-wrap">
+        <section class="main main-archive">
+            <h2 class="home-sticky-title">featured post</h2>
+            <div class="loop">
+                {% for fe in featured %}
+                <article class="post format-gallery post_format-post-format-gallery">
+
+                    <a href="#" title="{{fe.post}}">
+                        <div class="part-gallery">
+                            <div class="flexslider">
+                                <ul class="slides">
+
+                                    <li><span class="post-image"><img src="{{fe.post.image.url}}" alt="Run-3" /></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </a>
+
+                    <div class="inner">
+
+                        <h2 class="entry-title">
+                            <a href="#" title="{{fe.post}}">
+                                {{fe.post}} </a>
+                        </h2>
+                        <ul class="meta top">
+                            <li class="time">
+                                <a href="#" title="{{fe.post}}">
+                                    <time class="post-date updated" datetime="2015-02-01">{{fe.post.created_at}}</time>
+                                </a>
+                            </li>
+
+                            <li class="comments post-tags">
+                                <a href="#">2
+                                    Comments</a>
+                            </li>
+
+                            <li class="author-m post-tags">
+                                By <span class="vcard author post-author"><span class="fn"><a href="#"
+                                            title="Posts by {{fe.post.author}}"
+                                            rel="author">{{fe.post.author}}</a></span></span>
+                            </li>
+
+                        </ul>
+                        <div class="post-content">
+                            <p>{{fe.post.description}}<a href="/blog/single/{{fe.post.id}}" class="more-link">Read
+                                    More</a>
+                            </p>
+                        </div>
+
+
+                        <ul class="meta bottom">
+
+
+                            <li class="cat post-tags">Category: <a href="#">{{fe.post.category}}</a>
+                            </li>
+
+
+                        </ul>
+
+                    </div>
+                </article>
+                {% endfor %}
+
+                <h2 class="home-sticky-title">recent posts</h2>
+
+                {% for post in posts%}
+
+                <article class="post format-image has-post-thumbnail post_format-post-format-image">
+
+                    <span class="post-image">
+                        <a href="#" title="{{post.title}}">
+                            <img width="616" height="311" src="{{post.image.url}}"
+                                class="attachment-desktop size-desktop" alt="" />
+                        </a>
+
+                    </span>
+
+
+                    <div class="inner">
+
+                        <h2 class="entry-title">
+                            <a href="#" title="{{post.title}}">
+                                {{post.title}} </a>
+                        </h2>
+                        <ul class="meta top">
+                            <li class="time">
+                                <a href="#" title="{{post.title}}">
+                                    <time class="post-date updated">{{post.created_at}}</time>
+                                </a>
+                            </li>
+
+                            <li class="comments post-tags">
+                                <a href="#">0
+                                    Comments</a>
+                            </li>
+
+                            <li class="author-m post-tags">
+                                By <span class="vcard author post-author"><span class="fn"><a href="#"
+                                            title="Posts by Clare Smith" rel="author">{{post.author}}</a></span></span>
+                            </li>
+
+                        </ul>
+                        <div class="post-content">
+                            <p>{{post.description}} <a href="/blog/single/{{post.id}}" class="more-link">Read More</a>
+                            </p>
+                        </div>
+
+
+                        <ul class="meta bottom">
+
+                            <li class="cat post-tags">Category: <a href="#">{{post.category}}</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </article>
+
+                {% endfor %}
+
+
+            </div>
+
+
+        </section>
+
+    </div><!-- /main-wrap -->
+
+    <div>
+        <a href="{% url 'blogs' %}" class="more-link">Browse all</a>
+    </div>
+
+</div><!-- /wrap -->
+
+
+{% endblock %}

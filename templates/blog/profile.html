@@ -1,0 +1,67 @@
+{% extends 'blogbase.html' %}
+
+{% block content %}
+
+<div class="wrap full-wrap">
+    <div class="main-wrap">
+        <section class="main main-archive">
+
+            <article class="post result">
+                <div class="inner">
+                    <h1 class="searching">Blogs you have written</h1>
+                </div>
+            </article>
+
+            <div class="loop">
+                {% for post in posts%}
+                <article class="post has-post-thumbnail">
+
+                    <div class="inner">
+
+                        <h2 class="entry-title">
+                            <a href="#" title="{{post.title}}">
+                                {{post.title}} </a>
+                        </h2>
+                        <ul class="meta top">
+                            <li class="time">
+                                <a href="#" title="{{post.title}}">
+                                    <time class="post-date updated" datetime="2014-05-02">{{post.created_at}}</time>
+                                </a>
+                            </li>
+
+                            <li class="comments post-tags">
+                                <a href="#">0
+                                    Comments</a>
+                            </li>
+                        </ul>
+                        <div class="post-content">
+                            <p>{{post.description}}</p>
+                            <div>
+                                <div style="float: left;">
+                                    <a href="/blog/edit/{{post.id}}" class="more-link">Edit</a>
+                                </div>
+                                <div style="float: right;">
+                                    <a href="/blog/delete/{{post.id}}" class="more-link">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <ul class="meta bottom">
+                            <li class="cat post-tags">Category: <a href="#">{{post.category}}</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </article>
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+    </div><!-- /main-wrap -->
+
+
+</div><!-- /wrap -->
+
+{% endblock %}

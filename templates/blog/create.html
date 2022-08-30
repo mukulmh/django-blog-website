@@ -1,0 +1,58 @@
+{% extends 'blogbase.html' %}
+
+{% block content %}
+
+<div class="wrap full-wrap">
+    <div class="main-wrap">
+        <section class="main">
+
+            <div class="comments-wrapper">
+
+                <div id="comments" class="inner">
+
+                    <div class="comments-inner">
+                        <h3 id="respond-title">Write Blog</h3>
+                    </div>
+
+                    <div id="respond" class="comment-respond">
+                        <form enctype="multipart/form-data" method="post">
+                            {% csrf_token %}
+                            <p>* Indicates required parameters</p>
+                            <p class="comment-form-author"><label for="title">Title</label> <span
+                                    class="required hidden">*</span>
+                                <input id="title" name="title" type="text" value="" size="30" aria-required="true"
+                                    placeholder="Title">
+                            </p>
+                            <p><label for="description">Description</label>
+                                <textarea id="description" name="description" cols="45" rows="8" aria-required="true"
+                                    placeholder="Description"></textarea>
+                            </p>
+                            <p><label for="category">Select Category</label>
+                                <select name="category" id="category">
+                                    <option selected disabled value="Select Category">Select Category</option>
+                                    {% for category in categories %}
+                                    <option value={{category.id}}>{{category.name}}</option>
+                                    {% endfor %}
+                                </select>
+
+                            </p>
+                            <p><label for="image">Image</label> <span class="required ">*</span>
+                                <input id="image" name="image" type="file" value="" size="30" aria-required="true"
+                                    placeholder="Email">
+                            </p>
+                            <p class="form-submit"><input name="submit" type="submit" id="submit" class="submit"
+                                    value="Post Blog"></p>
+                        </form>
+                    </div><!-- #respond -->
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div><!-- /main-wrap -->
+
+</div><!-- /wrap -->
+
+{% endblock %}

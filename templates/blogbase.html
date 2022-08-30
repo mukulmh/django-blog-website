@@ -1,0 +1,217 @@
+{% load static %}
+
+<!doctype html>
+<!--
+	Itsy by FreeHTML5.co
+	Twitter: https://twitter.com/fh5co
+	Facebook: https://fb.com/fh5co
+	URL: https://freehtml5.co
+-->
+<html class="home blog no-js" lang="en-US">
+
+<head>
+    <title>Itsy | A cutesy Blog Website</title>
+
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        type="text/css" media="all" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Amatic+SC%3A400%2C700%7CLato%3A400%2C700%2C400italic%2C700italic&amp;ver=4.9.8"
+        type="text/css" media="screen" />
+    <link rel="stylesheet" href="{% static 'itsy/style.css' %}" type="text/css" media="screen" />
+    <link rel="stylesheet" href="{% static 'itsy/print.css' %}" type="text/css" media="print" />
+    <!--[if (lt IE 9) & (!IEMobile)]>
+    <link rel="stylesheet" id="lt-ie9-css" href="css/ie.css" type="text/css" media="screen"/>
+    <![endif]-->
+    <script src="{% static 'itsy/js/jquery-3.0.0.min.js' %}"></script>
+    <script src="{% static 'itsy/js/jquery-migrate-3.0.1.min.js' %}"></script>
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+
+<body class="home sticky-menu sidebar-off" id="top">
+
+    <header class="header">
+
+        <div class="header-wrap">
+
+            <div class="logo plain logo-left">
+                <div class="site-title">
+                    <a href="{% url 'index' %}" title="Go to Home">Itsy</a>
+                </div>
+            </div><!-- /logo -->
+
+
+            <nav id="nav" role="navigation">
+                <div class="table">
+                    <div class="table-cell">
+                        <ul id="menu-menu-1">
+                            <li class="menu-item">
+                                <a href="{% url 'index' %}">Home</a>
+                            </li>
+
+                            <li class="menu-item">
+                                <a href="{% url 'blogs' %}">Blog</a>
+                                <ul class="sub-menu">
+                                    <li class="menu-item">
+                                        <a href="{% url 'blogs' %}">Browse All</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="{% url 'categories' %}">Categories</a>
+                                    </li>
+                                    {% if user.is_authenticated %}
+                                    <li class="menu-item">
+                                        <a href="{% url 'create' %}">Write a Blog</a>
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                            </li>
+
+                            {% if user.is_authenticated %}
+                            <li class="menu-item">
+                                <a href="{% url 'profile' %}">{{user.username}}</a>
+                                <ul class="sub-menu">
+                                    <li class="menu-item">
+                                        <a href="{% url 'profile' %}">Profile</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="#">Your Blog</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="{% url 'logout' %}">Logout</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            {% else %}
+                            <li class="menu-item">
+                                <a href="{% url 'login' %}">Login</a>
+                            </li>
+                            {% endif %}
+
+                            <li class="menu-item">
+                                <a href="about.html">About</a>
+                            </li>
+
+                            <li class="menu-item">
+                                <a href="contact.html">Contact us</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <a href="#nav" class="menu-trigger"><i class="fa fa-bars"></i></a>
+
+            <a href="#topsearch" class="search-trigger"><i class="fa fa-search"></i></a>
+
+        </div>
+
+    </header>
+
+    {% block content %}
+
+    {% endblock %}
+
+    <div class="footer-widgets widget-count-4">
+
+        <div class="wrap">
+
+            <div class="mt-about-you-widget">
+                <div class="widget footer">
+
+                    <img class="mt-about-avatar" src="{% static 'itsy/images/about-me.jpg' %}" alt="Clare Itsy" />
+
+
+                    <h4>Clare Itsy</h4>
+
+                    <div class="mt-about-bio">
+                        <p>Hi, my name is Clare and I&#039;m a serial blogger. I love life and more
+                            than anything in the whole wide world, I love taking photographs. Oh and did I mention, I
+                            quite like
+                            blogging?</p>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="widget footer">
+                <h4>Recent Posts</h4>
+                <ul>
+                    <li>
+                        <a href="#">The Lollipop</a>
+                    </li>
+                    <li>
+                        <a href="#">Running through Chicago</a>
+                    </li>
+                    <li>
+                        <a href="#">The Apothecary</a>
+                    </li>
+                    <li>
+                        <a href="#">The Flowers</a>
+                    </li>
+                    <li>
+                        <a href="#">The Sunny Day</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="widget footer">
+                <h4>Categories</h4>
+                <ul>
+                    <li class="cat-item cat-item-6">
+                        <a href="#" title="A cute little description would go in here">Blog</a>
+                    </li>
+                    <li class="cat-item cat-item-7">
+                        <a href="#" title="A cute little description would go in here">Cute</a>
+                    </li>
+                    <li class="cat-item cat-item-8">
+                        <a href="#">Fitness</a>
+                    </li>
+                    <li class="cat-item cat-item-9">
+                        <a href="#">Fun</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="widget footer">
+                <h4>Gallery</h4>
+                <div class="textwidget">
+                    <img src="{% static 'itsy/images/gallery.png' %}" alt="">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <footer class="footer">
+        <div class="footer-wrap">
+            <div id="footer-text">&copy; 2018 Itsy.
+                Designed by <a href="https://freehtml5.co" target="_blank">FreeHTML5</a>.</div>
+
+            <a href="#top" id="btt">Top <i class="fa fa-chevron-up"></i></a>
+        </div>
+    </footer>
+
+    <div id="topsearch">
+        <div class="table">
+            <div class="table-cell">
+                <form role="search" method="get" class="searchform" action="index.html">
+                    <div>
+                        <input type="text" value="" name="s" class="s" placeholder="Type and hit enter" />
+                        <input type="submit" class="searchsubmit" value="Search" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        <a href="#topsearch" class="search-trigger"><i class="fa fa-times"></i></a>
+    </div>
+
+
+    <script>var ie9 = false;</script>
+    <!--[if lte IE 9 ]>
+<script> var ie9 = true; </script>
+<![endif]-->
+    <script src="{% static 'itsy/js/global-plugins.min.js' %}"></script>
+    <script src="{% static 'itsy/js/main.js' %}"></script>
+</body>
+
+</html>
