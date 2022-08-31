@@ -23,13 +23,13 @@
 
                         <li class="comments">
                             {% for c in counts %}
-                            <a href="single.html#respond">{{c.count}} Comments</a>
+                            <a href="#comments">{{c.count}} Comments</a>
                             {% endfor %}
                         </li>
 
                         <li class="author-m">
-                            By <span class="vcard author"><span class="fn"><a href="blog.html"
-                                        title="Posts by Clare Smith" rel="author">{{post.author}}</a></span></span>
+                            By <span class="vcard author"><span class="fn"><a href="/blog/profile/{{post.author_id}}"
+                                        title="Posts by {{post.author}}" rel="author">{{post.author}}</a></span></span>
                         </li>
 
                     </ul>
@@ -57,7 +57,7 @@
 
 
                     <ul class="meta bottom">
-                        <li class="cat">Category: <a href="#">{{post.category}}</a>
+                        <li class="cat">Category: <a href="/blog/category/{{post.category_id}}">{{post.category}}</a>
                     </ul>
 
                 </div>
@@ -66,16 +66,12 @@
             <nav class="pagination">
                 <ul>
                     <li class="older-posts">
-                        <span><a href="#" rel="prev"><i class="fa fa-chevron-left"></i> <span
+                        <span><a href="{% url 'index' %}" rel="prev"><i class="fa fa-chevron-left"></i> <span
                                     class="i">Prev</span></a></span>
                     </li>
                     <li class="share-link">
-                        <a href="#share"><i class="fa fa-share-alt"></i><span class="i">Share</span></a>
+                        <a href="#"><i class="fa fa-heart"></i><span class="i">Like</span></a>
                     </li>
-                    <li class="newer-posts">
-                        <span class="inactive"><span class="i">Next</span> <i class="fa fa-chevron-right"></i></span>
-                    </li>
-
                 </ul>
             </nav>
 
@@ -83,7 +79,7 @@
                 <span class="author-avatar"><img alt="" src="{% static 'itsy/images/about-me.jpg' %}"
                         class="avatar avatar-200 photo" height="200" width="200"></span>
                 <div class="author-bio">
-                    <h4><a href="#">{{post.author}}</a></h4>
+                    <h4><a href="/blog/profile/{{post.author_id}}">{{post.author}}</a></h4>
                     <p>My name is Clare and I'm a serial blogger. I love life and more than anything in the whole
                         wide world, I love taking photographs. Oh and did I mention, I quite like blogging?</p>
                     <div class="author-socials-wrap">

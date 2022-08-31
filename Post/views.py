@@ -123,3 +123,11 @@ def profile(request,id):
     posts = Post.objects.filter(author_id=id).order_by('-created_at')
     return render(request,'blog/profile.html',{'posts':posts,'author':author})
     
+
+# filter posts by search
+def searchBlog(request):
+    if request.method=='POST':
+        value = request.POST['s']
+        posts = Post.objects.filter(title__icontains=value)
+        return render(request,'blog/blog.html',{'posts':posts})
+    return redirect('blogs')

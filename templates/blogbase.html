@@ -90,11 +90,11 @@
                             {% endif %}
 
                             <li class="menu-item">
-                                <a href="about.html">About</a>
+                                <a href="#">About</a>
                             </li>
 
                             <li class="menu-item">
-                                <a href="contact.html">Contact us</a>
+                                <a href="#">Contact us</a>
                             </li>
                         </ul>
                     </div>
@@ -194,9 +194,10 @@
     <div id="topsearch">
         <div class="table">
             <div class="table-cell">
-                <form role="search" method="get" class="searchform" action="index.html">
+                <form role="search" method="post" class="searchform" action="{% url 'search' %}">
+                    {% csrf_token %}
                     <div>
-                        <input type="text" value="" name="s" class="s" placeholder="Type and hit enter" />
+                        <input type="text" id="s" name="s" class="s" placeholder="Type and hit enter" />
                         <input type="submit" class="searchsubmit" value="Search" />
                     </div>
                 </form>
