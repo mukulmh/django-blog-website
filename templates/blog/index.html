@@ -61,7 +61,7 @@
                 {% for fe in featured %}
                 <article class="post format-gallery post_format-post-format-gallery">
 
-                    <a href="#" title="{{fe.post}}">
+                    <a title="{{fe.post}}">
                         <div class="part-gallery">
                             <div class="flexslider">
                                 <ul class="slides">
@@ -77,12 +77,12 @@
                     <div class="inner">
 
                         <h2 class="entry-title">
-                            <a href="#" title="{{fe.post}}">
+                            <a href="/blog/single/{{fe.post.id}}" title="{{fe.post}}">
                                 {{fe.post}} </a>
                         </h2>
                         <ul class="meta top">
                             <li class="time">
-                                <a href="#" title="{{fe.post}}">
+                                <a title="{{fe.post}}">
                                     <time class="post-date updated" datetime="2015-02-01">{{fe.post.created_at}}</time>
                                 </a>
                             </li>
@@ -109,7 +109,7 @@
                         <ul class="meta bottom">
 
 
-                            <li class="cat post-tags">Category: <a href="#">{{fe.post.category}}</a>
+                            <li class="cat post-tags">Category: <a href="/blog/blog/{{fe.post.category_id}}">{{fe.post.category}}</a>
                             </li>
 
 
@@ -121,12 +121,12 @@
 
                 <h2 class="home-sticky-title">recent posts</h2>
 
-                {% for post in posts%}
+                {% for post in posts %}
 
                 <article class="post format-image has-post-thumbnail post_format-post-format-image">
 
                     <span class="post-image">
-                        <a href="#" title="{{post.title}}">
+                        <a title="{{post.title}}">
                             <img width="616" height="311" src="{{post.image.url}}"
                                 class="attachment-desktop size-desktop" alt="" />
                         </a>
@@ -137,12 +137,12 @@
                     <div class="inner">
 
                         <h2 class="entry-title">
-                            <a href="#" title="{{post.title}}">
+                            <a href="/blog/single/{{post.id}}" title="{{post.title}}">
                                 {{post.title}} </a>
                         </h2>
                         <ul class="meta top">
                             <li class="time">
-                                <a href="#" title="{{post.title}}">
+                                <a title="{{post.title}}">
                                     <time class="post-date updated">{{post.created_at}}</time>
                                 </a>
                             </li>
@@ -166,7 +166,7 @@
 
                         <ul class="meta bottom">
 
-                            <li class="cat post-tags">Category: <a href="#">{{post.category}}</a>
+                            <li class="cat post-tags">Category: <a href="/blog/blog/{{post.category_id}}">{{post.category}}</a>
                             </li>
 
                         </ul>

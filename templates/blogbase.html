@@ -70,13 +70,13 @@
 
                             {% if user.is_authenticated %}
                             <li class="menu-item">
-                                <a href="{% url 'profile' %}">{{user.username}}</a>
+                                <a href="#">{{user.username}}</a>
                                 <ul class="sub-menu">
                                     <li class="menu-item">
-                                        <a href="{% url 'profile' %}">Profile</a>
+                                        <a href="#">Profile</a>
                                     </li>
                                     <li class="menu-item">
-                                        <a href="#">Your Blog</a>
+                                        <a href="{% url 'yourblog' %}">Your Blog</a>
                                     </li>
                                     <li class="menu-item">
                                         <a href="{% url 'logout' %}">Logout</a>
