@@ -22,7 +22,9 @@
                         </li>
 
                         <li class="comments">
-                            <a href="single.html#respond">0 Comments</a>
+                            {% for c in counts %}
+                            <a href="single.html#respond">{{c.count}} Comments</a>
+                            {% endfor %}
                         </li>
 
                         <li class="author-m">
@@ -145,7 +147,9 @@
                 <div id="comments" class="inner">
 
                     <div class="comments-inner">
-                        <h3 id="respond-title">Comments (0)</h3>
+                        {% for c in counts %}
+                        <h3 id="respond-title">Comments ({{c.count}})</h3>
+                        {% endfor %}
                         {% for comment in comments %}
                         <div>
                             <p><a>{{comment.comment_by}}</a> &nbsp {{comment.comment}}</p>

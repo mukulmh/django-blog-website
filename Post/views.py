@@ -8,18 +8,16 @@ from .models import Category, Comment, Featured, Like, Post
 
 # blog main page
 def index(request):
-    top_authors = Post.objects.values('author').annotate(no_of_post=Count('id')).order_by('-no_of_post')[:3]
-    top_posts = Like.objects.values('liked_on').annotate(likes=Count('liked_by')).order_by('-likes')[:3]
-    print(top_posts)
     posts = Post.objects.all().order_by('-created_at')[:3]
     featured = Featured.objects.all()
     
-    return render(request, 'blog/index.html',{'posts':posts,'featured':featured,'top_posts':top_posts})
+    return render(request, 'blog/index.html',{'posts':posts,'featured':featured})
 
 
 # all blogs page
 def blogs(request):
     posts = Post.objects.all().order_by('-created_at')
+
     return render(request,'blog/blog.html',{'posts':posts})
 
 
@@ -39,7 +37,7 @@ def blogFilter(request, id):
 def single(request, id):
     post = Post.objects.get(id=id)
     comments = Comment.objects.filter(comment_on=id).annotate(count=Count('id')).order_by()
-    print(comments)
+    counts = Comment.objects.raw('SELECT id, COUNT(id) as count FROM post_comment WHERE comment_on_id = %s',[id])
     if request.method=='POST':
         if request.user.is_authenticated:
             comment = request.POST['comment']
@@ -48,7 +46,7 @@ def single(request, id):
             query.save()
             return redirect(back)
     related = Post.objects.filter(category_id=post.category_id).order_by('-created_at')[:3]
-    return render(request,'blog/single.html',{'post':post, 'related':related, 'comments':comments})
+    return render(request,'blog/single.html',{'post':post, 'related':related, 'comments':comments, 'counts':counts})
 
 
 # create post
