@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from django.core.files.storage import FileSystemStorage
+from django.contrib.auth.models import User
 from django.contrib import auth, messages
 from django.db.models import Count
 from .models import Category, Comment, Featured, Like, Post
@@ -116,8 +117,9 @@ def yourBlog(request):
     return redirect('index')
     
 
-# profile of logged in user
-def profile(request):
-    if request.user.is_authenticated:
-        return render(request,'blog/profile.html')
-    return redirect('index')
+# profile of an user
+def profile(request,id):
+    author = User.objects.get(id=id)
+    posts = Post.objects.filter(author_id=id).order_by('-created_at')
+    return render(request,'blog/profile.html',{'posts':posts,'author':author})
+    

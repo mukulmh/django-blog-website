@@ -8,7 +8,7 @@
 
             <article class="post result">
                 <div class="inner">
-                    <h1 class="searching">Blogs you have written</h1>
+                    <h1 class="searching">Blogs {{author.username}} have written</h1>
                 </div>
             </article>
 
@@ -19,7 +19,7 @@
                     <div class="inner">
 
                         <h2 class="entry-title">
-                            <a href="#" title="{{post.title}}">
+                            <a href="/blog/single/{{post.id}}" title="{{post.title}}">
                                 {{post.title}} </a>
                         </h2>
                         <ul class="meta top">
@@ -28,26 +28,13 @@
                                     <time class="post-date updated" datetime="2014-05-02">{{post.created_at}}</time>
                                 </a>
                             </li>
-
-                            <li class="comments post-tags">
-                                <a href="#">0
-                                    Comments</a>
-                            </li>
                         </ul>
                         <div class="post-content">
                             <p>{{post.description}}</p>
-                            <div>
-                                <div style="float: left;">
-                                    <a href="/blog/edit/{{post.id}}" class="more-link">Edit</a>
-                                </div>
-                                <div style="float: right;">
-                                    <a href="/blog/delete/{{post.id}}" class="more-link">Delete</a>
-                                </div>
-                            </div>
                         </div>
 
                         <ul class="meta bottom">
-                            <li class="cat post-tags">Category: <a href="#">{{post.category}}</a>
+                            <li class="cat post-tags">Category: <a href="/blog/category/{{post.category_id}}">{{post.category}}</a>
                             </li>
                         </ul>
 
