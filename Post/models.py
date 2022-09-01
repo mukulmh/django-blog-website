@@ -9,6 +9,9 @@ class Category(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ('-created_at',)
+
     def __str__(self):
         return self.name
 
@@ -20,6 +23,9 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ('-created_at',)
 
     def __str__(self):
         return self.title
@@ -49,4 +55,4 @@ class Like(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __int__(self):
-        return self.id
+        return self.liked_on

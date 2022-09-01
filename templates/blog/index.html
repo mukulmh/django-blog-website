@@ -18,7 +18,7 @@
 
     <h2 class="home-sticky-title">fan favourites</h2>
 
-    {% for post in top_posts %}
+    {% for t in tops %}
     <div class="sticky-inner">
 
         <!-- top blogs -->
@@ -26,21 +26,21 @@
         <aside class="home-sticky-post post has-post-thumbnail sticky ">
 
             <span class="post-image">
-                <a href="/blog/single/{{post.id}}">
-                    <img width="502" height="502" src="{{post.image.url}}" class="attachment-sticky size-sticky"
+                <a>
+                    <img width="502" height="502" src="{{t.image.url}}" class="attachment-sticky size-sticky"
                         alt="" />
                 </a>
             </span>
 
             <div class="inner">
                 <h3 class="entry-title">
-                    <a href="/blog/single/{{post.id}}">{{post.title}}</a>
+                    <a href="/blog/single/{{t.id}}">{{t.title}}</a>
                 </h3>
 
                 <ul class="meta top">
                     <li class="time">
-                        <a href="/blog/single/{{post.id}}" title="{{post.title}}">
-                            <time class="post-date updated" datetime="2015-01-31">By: {{post.author}}</time>
+                        <a href="/blog/profile/{{t.author_id}}" title="{{t.author}}">
+                            <time class="post-date updated">By: {{t.author}}</time>
                         </a>
                     </li>
                 </ul>

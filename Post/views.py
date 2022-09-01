@@ -9,15 +9,22 @@ from .models import Category, Comment, Featured, Like, Post
 
 # blog main page
 def index(request):
-    posts = Post.objects.all().order_by('-created_at')[:3]
+    posts = Post.objects.all()[:3]
+    
+    likes = Like.objects.values('liked_on').annotate(count=Count('liked_by')).order_by('-count')[:3]
+    tops=[]
+    for post in likes:
+        top = Post.objects.get(id=post['liked_on'])
+        tops.append(top)
+
     featured = Featured.objects.all()
     
-    return render(request, 'blog/index.html',{'posts':posts,'featured':featured})
+    return render(request, 'blog/index.html',{'posts':posts,'featured':featured,'tops':tops})
 
 
 # all blogs page
 def blogs(request):
-    posts = Post.objects.all().order_by('-created_at')
+    posts = Post.objects.all()
 
     return render(request,'blog/blog.html',{'posts':posts})
 
@@ -30,7 +37,7 @@ def categories(request):
 
 # filter posts by category
 def blogFilter(request, id):
-    posts = Post.objects.filter(category_id=id).order_by('-created_at')
+    posts = Post.objects.filter(category_id=id)
     return render(request,'blog/blog.html',{'posts':posts})
 
 
@@ -39,6 +46,10 @@ def single(request, id):
     post = Post.objects.get(id=id)
     comments = Comment.objects.filter(comment_on=id).annotate(count=Count('id')).order_by()
     counts = Comment.objects.raw('SELECT id, COUNT(id) as count FROM post_comment WHERE comment_on_id = %s',[id])
+    likes = Like.objects.filter(liked_by_id=request.user.id, liked_on_id = id)
+    like = 'False'
+    if likes.exists():
+        like = 'True'
     if request.method=='POST':
         if request.user.is_authenticated:
             comment = request.POST['comment']
@@ -46,8 +57,8 @@ def single(request, id):
             back = request.POST.get('back', '/')
             query.save()
             return redirect(back)
-    related = Post.objects.filter(category_id=post.category_id).order_by('-created_at')[:3]
-    return render(request,'blog/single.html',{'post':post, 'related':related, 'comments':comments, 'counts':counts})
+    related = Post.objects.filter(category_id=post.category_id)[:3]
+    return render(request,'blog/single.html',{'post':post, 'related':related, 'comments':comments, 'counts':counts, 'like':like})
 
 
 # create post
@@ -62,7 +73,6 @@ def create(request):
             image = fs.save(file.name, file)
             author = request.user.id
             post = Post(title=title, description=description, category_id=category, author_id = author, image=image)
-            print(post)
             post.save()
         categories = Category.objects.all()
         return render(request, 'blog/create.html',{'categories':categories})
@@ -112,7 +122,7 @@ def delete(request, id):
 # blog created by the logged in user
 def yourBlog(request):
     if request.user.is_authenticated:
-        posts = Post.objects.filter(author_id=request.user.id).all().order_by('-created_at')
+        posts = Post.objects.filter(author_id=request.user.id).all()
         return render(request,'blog/yourblog.html',{'posts':posts})
     return redirect('index')
     
@@ -120,7 +130,7 @@ def yourBlog(request):
 # profile of an user
 def profile(request,id):
     author = User.objects.get(id=id)
-    posts = Post.objects.filter(author_id=id).order_by('-created_at')
+    posts = Post.objects.filter(author_id=id)
     return render(request,'blog/profile.html',{'posts':posts,'author':author})
     
 
@@ -131,3 +141,17 @@ def searchBlog(request):
         posts = Post.objects.filter(title__icontains=value)
         return render(request,'blog/blog.html',{'posts':posts})
     return redirect('blogs')
+
+
+# like post
+def likepost(request, id):
+    if request.user.is_authenticated:
+        likes = Like.objects.filter(liked_by_id=request.user.id, liked_on_id = id)
+        if likes.exists():
+            likes.delete()
+            return redirect('single', id=id)
+        click = Like(liked_by_id = request.user.id, liked_on_id = id)
+        click.save()
+        return redirect('single', id=id)
+        
+    

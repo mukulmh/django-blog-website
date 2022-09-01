@@ -62,7 +62,8 @@
 
                 </div>
             </article>
-
+            
+            {% if user.is_authenticated %}
             <nav class="pagination">
                 <ul>
                     <li class="older-posts">
@@ -70,10 +71,17 @@
                                     class="i">Prev</span></a></span>
                     </li>
                     <li class="share-link">
-                        <a href="#"><i class="fa fa-heart"></i><span class="i">Like</span></a>
+                        <a href="/blog/like/{{post.id}}">
+                            {% if like == 'True' %}
+                            <i class="fa fa-thumbs-down"></i>
+                            {% else %}
+                            <i class="fa fa-thumbs-up"></i>
+                            {% endif %}
+                            <span class="i">Like</span></a>
                     </li>
                 </ul>
             </nav>
+            {% endif %}
 
             <aside class="author-wrap">
                 <span class="author-avatar"><img alt="" src="{% static 'itsy/images/about-me.jpg' %}"

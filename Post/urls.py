@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import blogFilter, blogs, categories, create, delete, edit, index, profile, searchBlog, yourBlog, single
+from .views import blogFilter, blogs, categories, create, delete, edit, index, likepost, profile, searchBlog, yourBlog, single
 
 urlpatterns = [
     path('index/', index, name='index'),
@@ -14,4 +14,5 @@ urlpatterns = [
     path('yourblog/', yourBlog, name='yourblog'),
     path('profile/<int:id>',profile, name='profile'),
     path('search/',searchBlog, name='search'),
+    path('like/<int:id>',likepost, name='likepost'),
 ]
