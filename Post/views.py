@@ -10,7 +10,7 @@ from .models import Category, Comment, Featured, Like, Post
 # blog main page
 def index(request):
     posts = Post.objects.all()[:3]
-    
+
     likes = Like.objects.values('liked_on').annotate(count=Count('liked_by')).order_by('-count')[:3]
     tops=[]
     for post in likes:
@@ -44,11 +44,10 @@ def blogFilter(request, id):
 # filter single post
 def single(request, id):
     post = Post.objects.get(id=id)
-    comments = Comment.objects.filter(comment_on=id).annotate(count=Count('id')).order_by()
-    counts = Comment.objects.raw('SELECT id, COUNT(id) as count FROM post_comment WHERE comment_on_id = %s',[id])
-    likes = Like.objects.filter(liked_by_id=request.user.id, liked_on_id = id)
-    like = 'False'
-    if likes.exists():
+    comments = Comment.objects.filter(comment_on=id)
+    counts = Comment.objects.filter(comment_on = id).values('comment_on').annotate(count=Count('comment_by'))
+    like = Like.objects.filter(liked_by_id=request.user.id, liked_on_id = id)
+    if like.exists():
         like = 'True'
     if request.method=='POST':
         if request.user.is_authenticated:
@@ -146,9 +145,9 @@ def searchBlog(request):
 # like post
 def likepost(request, id):
     if request.user.is_authenticated:
-        likes = Like.objects.filter(liked_by_id=request.user.id, liked_on_id = id)
-        if likes.exists():
-            likes.delete()
+        like = Like.objects.filter(liked_by_id=request.user.id, liked_on_id = id)
+        if like.exists():
+            like.delete()
             return redirect('single', id=id)
         click = Like(liked_by_id = request.user.id, liked_on_id = id)
         click.save()
