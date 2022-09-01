@@ -52,7 +52,7 @@
                             </li>
 
                             <li class="menu-item">
-                                <a href="{% url 'blogs' %}">Blog</a>
+                                <a style="cursor: pointer;">Blog</a>
                                 <ul class="sub-menu">
                                     <li class="menu-item">
                                         <a href="{% url 'blogs' %}">Browse All</a>
@@ -70,10 +70,10 @@
 
                             {% if user.is_authenticated %}
                             <li class="menu-item">
-                                <a href="#">{{user.username}}</a>
+                                <a style="cursor: pointer;">{{user.username}}</a>
                                 <ul class="sub-menu">
                                     <li class="menu-item">
-                                        <a href="#">Profile</a>
+                                        <a href="{% url 'setting' %}">Profile</a>
                                     </li>
                                     <li class="menu-item">
                                         <a href="{% url 'yourblog' %}">Your Blog</a>

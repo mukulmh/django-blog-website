@@ -2,6 +2,19 @@
 {% load static %}
 {% block content %}
 
+<script>
+    function clickMe() {
+        var text = document.getElementById("field");
+        text.classList.toggle("hide");
+        text.classList.toggle("show");
+    }
+</script>
+<style>
+    .hide{display: none;}
+    .show{display: block;}
+    .mybutton{cursor: pointer;}
+</style>
+
 <div class="wrap full-wrap">
     <div class="main-wrap">
         <section class="main">
@@ -22,9 +35,11 @@
                         </li>
 
                         <li class="comments">
-                            {% for c in counts %}
-                            <a href="#comments">{{c.count}} Comments</a>
-                            {% endfor %}
+                            <a href="#comments">
+                                {% for c in counts %}
+                                {{c.count}}
+                                {% endfor %}
+                                Comments</a>
                         </li>
 
                         <li class="author-m">
@@ -62,7 +77,7 @@
 
                 </div>
             </article>
-            
+
             {% if user.is_authenticated %}
             <nav class="pagination">
                 <ul>
@@ -151,13 +166,56 @@
                 <div id="comments" class="inner">
 
                     <div class="comments-inner">
-                        {% for c in counts %}
-                        <h3 id="respond-title">Comments ({{c.count}})</h3>
-                        {% endfor %}
+
+                        <h3 id="respond-title">Comments
+                            {% for c in counts %}
+                            ({{c.count}})
+                            {% endfor %}
+                        </h3>
+
                         {% for comment in comments %}
                         <div>
-                            <p><a>{{comment.comment_by}}</a> &nbsp {{comment.comment}}</p>
+                            <p><a>{{comment.comment_by}}</a> &nbsp {{comment.comment}} &nbsp
+                                {% if user.is_authenticated %}
+                                    {% if user.id == post.author_id %}
+                                        {% if user.id == comment.comment_by_id %}
+                                            <a style="cursor: pointer;" onclick="clickMe()">Edit</a> &nbsp
+                                            <a href="/blog/deleteComment/{{comment.id}}">Delete</a>
+                                            <div class="hide" id="field" style="width: 50%;">
+                                                <form method="post" action="/blog/editComment/{{comment.id}}">
+                                                    {% csrf_token %}
+                                                    <div style="width: 80%; float:left; bottom: 0;">
+                                                        <input type="text" name="comment" id="comment" value="{{comment.comment}}">
+                                                    </div>
+                                                    <div style="width: 17%; float:right;">
+                                                        <button type="submit" style="height: 3px; width: 5px; align-items:center;">Save</button>
+                                                    </div>
+                                                </form>
+                                                
+                                            </div>
+                                        {% else %}
+                                            <a href="/blog/deleteComment/{{comment.id}}">Delete</a>
+                                        {% endif %}
+                                    {% elif user.id == comment.comment_by_id %}
+                                        <a style="cursor: pointer;" onclick="clickMe()">Edit</a> &nbsp
+                                        <a href="/blog/deleteComment/{{comment.id}}">Delete</a>
+                                        <div class="hide" id="field" style="width: 50%;">
+                                            <form method="post" action="/blog/editComment/{{comment.id}}">
+                                                {% csrf_token %}
+                                                <div style="width: 80%; float:left; bottom: 0;">
+                                                    <input type="text" name="comment" id="comment" value="{{comment.comment}}">
+                                                </div>
+                                                <div style="width: 17%; float:right;">
+                                                    <button type="submit" style="height: 3px; width: 5px; align-items:center;">Save</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+                            </p>
+
                         </div>
+
                         {% endfor %}
                     </div>
 

@@ -126,7 +126,7 @@ def yourBlog(request):
     return redirect('index')
     
 
-# profile of an user
+# blogs of an author
 def profile(request,id):
     author = User.objects.get(id=id)
     posts = Post.objects.filter(author_id=id)
@@ -153,4 +153,29 @@ def likepost(request, id):
         click.save()
         return redirect('single', id=id)
         
-    
+
+# user profile setting
+def setting(request):
+    return render(request,'blog/user.html')
+
+
+# delete comment
+def deleteComment(request, id):
+    if request.user.is_authenticated:
+        comment = Comment.objects.filter(id = id)
+        for c in comment:
+            pid = c.comment_on_id
+        if comment.exists():
+            comment.delete()
+            return redirect('single', pid)
+    return redirect('index')
+
+
+# edit comment
+def editComment(request, id):
+    if request.user.is_authenticated:
+        comment = Comment.objects.get(id=id)
+        comment.comment = request.POST['comment']
+        comment.save()
+        return redirect('single', comment.comment_on_id)
+    return redirect('index')
