@@ -62,7 +62,7 @@
                                     </li>
                                     {% if user.is_authenticated %}
                                     <li class="menu-item">
-                                        <a href="{% url 'create' %}">Write a Blog</a>
+                                        <a href="{% url 'createPost' %}">Write a Blog</a>
                                     </li>
                                     {% endif %}
                                 </ul>
@@ -119,13 +119,13 @@
             <div class="mt-about-you-widget">
                 <div class="widget footer">
 
-                    <img class="mt-about-avatar" src="{% static 'itsy/images/about-me.jpg' %}" alt="Clare Itsy" />
+                    <img class="mt-about-avatar" src="{% static 'itsy/images/mukul.png' %}" alt="Clare Itsy" />
 
 
-                    <h4>Clare Itsy</h4>
+                    <h4>Mehedy H Mukul</h4>
 
                     <div class="mt-about-bio">
-                        <p>Hi, my name is Clare and I&#039;m a serial blogger. I love life and more
+                        <p>Hi, my name is Mukul and I&#039;m a computer engineer. I love life and more
                             than anything in the whole wide world, I love taking photographs. Oh and did I mention, I
                             quite like
                             blogging?</p>
@@ -137,38 +137,21 @@
             <div class="widget footer">
                 <h4>Recent Posts</h4>
                 <ul>
+                    {% for post in posts %}
                     <li>
-                        <a href="#">The Lollipop</a>
+                        <a href="{% url 'single' id=post.id %}">{{post.title}}</a>
                     </li>
-                    <li>
-                        <a href="#">Running through Chicago</a>
-                    </li>
-                    <li>
-                        <a href="#">The Apothecary</a>
-                    </li>
-                    <li>
-                        <a href="#">The Flowers</a>
-                    </li>
-                    <li>
-                        <a href="#">The Sunny Day</a>
-                    </li>
+                    {% endfor %}
                 </ul>
             </div>
             <div class="widget footer">
                 <h4>Categories</h4>
                 <ul>
+                    {% for category in categories %}
                     <li class="cat-item cat-item-6">
-                        <a href="#" title="A cute little description would go in here">Blog</a>
+                        <a href="{% url 'blogfilter' id=category.id %}" title="A cute little description would go in here">{{category.name}}</a>
                     </li>
-                    <li class="cat-item cat-item-7">
-                        <a href="#" title="A cute little description would go in here">Cute</a>
-                    </li>
-                    <li class="cat-item cat-item-8">
-                        <a href="#">Fitness</a>
-                    </li>
-                    <li class="cat-item cat-item-9">
-                        <a href="#">Fun</a>
-                    </li>
+                    {% endfor %}
                 </ul>
             </div>
             <div class="widget footer">

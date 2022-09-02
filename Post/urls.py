@@ -1,20 +1,20 @@
 from django.urls import path
 
-from .views import blogFilter, blogs, categories, create, delete, deleteComment, edit, editComment, index, likepost, profile, searchBlog, setting, yourBlog, single
+from .views import blogFilter, blogs, categories, createPost, deletePost, deleteComment, editPost, editComment, index, likepost, authorProfile, searchBlog, setting, yourBlog, singlePost
 
 urlpatterns = [
-    path('index/', index, name='index'),
-    path('blog/', blogs, name='blogs'),
+    path('', index, name='index'),
+    path('blogs/', blogs, name='blogs'),
     path('category/<int:id>', blogFilter, name='blogfilter'),
     path('categories/', categories, name='categories'),
-    path('single/<int:id>', single, name='single'),
-    path('create/', create, name='create'),
-    path('edit/<int:id>', edit, name='edit'),
-    path('delete/<int:id>', delete, name='delete'),
+    path('blog/<int:id>', singlePost, name='single'),
+    path('writepost/', createPost, name='createPost'),
+    path('editpost/<int:id>', editPost, name='editPost'),
+    path('deletepost/<int:id>', deletePost, name='deletePost'),
     path('yourblog/', yourBlog, name='yourblog'),
-    path('profile/<int:id>',profile, name='profile'),
+    path('author/<int:id>',authorProfile, name='author'),
     path('search/',searchBlog, name='search'),
-    path('profile-setting/',setting, name='setting'),
+    path('profile/',setting, name='setting'),
     path('like/<int:id>',likepost, name='likepost'),
     path('deleteComment/<int:id>',deleteComment, name='deleteComment'),
     path('editComment/<int:id>',editComment, name='editComment'),

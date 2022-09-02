@@ -20,7 +20,7 @@
                     <div class="inner">
 
                         <h2 class="entry-title">
-                            <a href="/blog/single/{{post.id}}" title="{{post.title}}">
+                            <a href="{% url 'single' id=post.id %}" title="{{post.title}}">
                                 {{post.title}} </a>
                         </h2>
                         <ul class="meta top">
@@ -36,20 +36,20 @@
                             </li> -->
 
                             <li class="author-m post-tags">
-                                By <span class="vcard author post-author"><span class="fn"><a href="/blog/profile/{{post.author_id}}"
+                                By <span class="vcard author post-author"><span class="fn"><a href="{% url 'author' id=post.author_id %}"
                                             title="Posts by {{post.author}}"
                                             rel="author">{{post.author}}</a></span></span>
                             </li>
 
                         </ul>
                         <div class="post-content">
-                            <p>{{post.description}} <a href="/blog/single/{{post.id}}" class="more-link">Read More</a>
+                            <p>{{post.description}} <a href="{% url 'single' id=post.id %}" class="more-link">Read More</a>
                             </p>
                         </div>
 
                         <ul class="meta bottom">
 
-                            <li class="cat post-tags">Category: <a href="/blog/category/{{post.category_id}}">{{post.category}}</a>
+                            <li class="cat post-tags">Category: <a href="{% url 'blogfilter' id=post.category_id %}">{{post.category}}</a>
                             </li>
 
                         </ul>

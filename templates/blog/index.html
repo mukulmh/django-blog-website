@@ -18,7 +18,7 @@
 
     <h2 class="home-sticky-title">fan favourites</h2>
 
-    {% for t in tops %}
+    {% for post in tops %}
     <div class="sticky-inner">
 
         <!-- top blogs -->
@@ -26,21 +26,21 @@
         <aside class="home-sticky-post post has-post-thumbnail sticky ">
 
             <span class="post-image">
-                <a>
-                    <img width="502" height="502" src="{{t.image.url}}" class="attachment-sticky size-sticky"
+                <a href="{% url 'single' id=post.id %}">
+                    <img width="502" height="502" src="{{post.image.url}}" class="attachment-sticky size-sticky"
                         alt="" />
                 </a>
             </span>
 
             <div class="inner">
                 <h3 class="entry-title">
-                    <a href="/blog/single/{{t.id}}">{{t.title}}</a>
+                    <a href="{% url 'single' id=post.id %}">{{post.title}}</a>
                 </h3>
 
                 <ul class="meta top">
                     <li class="time">
-                        <a href="/blog/profile/{{t.author_id}}" title="{{t.author}}">
-                            <time class="post-date updated">By: {{t.author}}</time>
+                        <a href="{% url 'author' id=post.author_id %}" title="{{post.author}}">
+                            <time class="post-date updated">By: {{post.author}}</time>
                         </a>
                     </li>
                 </ul>
@@ -77,7 +77,7 @@
                     <div class="inner">
 
                         <h2 class="entry-title">
-                            <a href="/blog/single/{{fe.post.id}}" title="{{fe.post}}">
+                            <a href="{% url 'single' id=fe.post.id %}" title="{{fe.post}}">
                                 {{fe.post}} </a>
                         </h2>
                         <ul class="meta top">
@@ -93,14 +93,15 @@
                             </li> -->
 
                             <li class="author-m post-tags">
-                                By <span class="vcard author post-author"><span class="fn"><a href="/blog/profile/{{fe.post.author_id}}"
+                                By <span class="vcard author post-author"><span class="fn"><a
+                                            href="{% url 'author' id=fe.post.author_id %}"
                                             title="Posts by {{fe.post.author}}"
                                             rel="author">{{fe.post.author}}</a></span></span>
                             </li>
 
                         </ul>
                         <div class="post-content">
-                            <p>{{fe.post.description}}<a href="/blog/single/{{fe.post.id}}" class="more-link">Read
+                            <p>{{fe.post.description}}<a href="{% url 'single' id=fe.post.id %}" class="more-link">Read
                                     More</a>
                             </p>
                         </div>
@@ -109,7 +110,8 @@
                         <ul class="meta bottom">
 
 
-                            <li class="cat post-tags">Category: <a href="/blog/category/{{fe.post.category_id}}">{{fe.post.category}}</a>
+                            <li class="cat post-tags">Category: <a
+                                    href="{% url 'blogfilter' id=fe.post.category_id %}">{{fe.post.category}}</a>
                             </li>
 
 
@@ -137,7 +139,7 @@
                     <div class="inner">
 
                         <h2 class="entry-title">
-                            <a href="/blog/single/{{post.id}}" title="{{post.title}}">
+                            <a href="{% url 'single' id=post.id %}" title="{{post.title}}">
                                 {{post.title}} </a>
                         </h2>
                         <ul class="meta top">
@@ -147,26 +149,23 @@
                                 </a>
                             </li>
 
-                            <!-- <li class="comments post-tags">
-                                <a href="#">0
-                                    Comments</a>
-                            </li> -->
-
                             <li class="author-m post-tags">
-                                By <span class="vcard author post-author"><span class="fn"><a href="/blog/profile/{{post.author_id}}"
-                                            title="Posts by Clare Smith" rel="author">{{post.author}}</a></span></span>
+                                By <span class="vcard author post-author"><span class="fn"><a
+                                            href="{% url 'author' id=post.author_id %}" title="Posts by Clare Smith"
+                                            rel="author">{{post.author}}</a></span></span>
                             </li>
 
                         </ul>
                         <div class="post-content">
-                            <p>{{post.description}} <a href="/blog/single/{{post.id}}" class="more-link">Read More</a>
+                            <p>{{post.description}} <a href="{% url 'single' id=post.id %}" class="more-link">Read More</a>
                             </p>
                         </div>
 
 
                         <ul class="meta bottom">
 
-                            <li class="cat post-tags">Category: <a href="/blog/category/{{post.category_id}}">{{post.category}}</a>
+                            <li class="cat post-tags">Category: <a
+                                    href="{% url 'blogfilter' id=post.category_id %}">{{post.category}}</a>
                             </li>
 
                         </ul>

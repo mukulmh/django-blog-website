@@ -19,7 +19,7 @@
                     <div class="inner">
 
                         <h2 class="entry-title">
-                            <a href="/blog/single/{{post.id}}" title="{{post.title}}">
+                            <a href="{% url 'single' id=post.id %}" title="{{post.title}}">
                                 {{post.title}} </a>
                         </h2>
                         <ul class="meta top">
@@ -34,7 +34,7 @@
                         </div>
 
                         <ul class="meta bottom">
-                            <li class="cat post-tags">Category: <a href="/blog/category/{{post.category_id}}">{{post.category}}</a>
+                            <li class="cat post-tags">Category: <a href="{% url 'blogfilter' id=post.category_id %}">{{post.category}}</a>
                             </li>
                         </ul>
 

@@ -22,14 +22,14 @@
                     <aside class="related post has-post-thumbnail">
 
                         <span class="post-image">
-                            <a href="/blog/category/{{category.id}}" title="{{category.name}}">
+                            <a href="{% url 'blogfilter' id=category.id %}" title="{{category.name}}">
                                 <img width="468" height="468" src="{{category.image.url}}" alt=""></a>
                         </span>
 
 
                         <div class="inner">
                             <h6 class="entry-title">
-                                <a href="#" title="{{category.name}}">
+                                <a href="{% url 'blogfilter' id=category.id %}" title="{{category.name}}">
                                     {{category.name}}
                                 </a>
                             </h6>

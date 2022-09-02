@@ -10,7 +10,7 @@ from .models import Category, Comment, Featured, Like, Post
 # blog main page
 def index(request):
     posts = Post.objects.all()[:3]
-
+    categories = Category.objects.all()
     likes = Like.objects.values('liked_on').annotate(count=Count('liked_by')).order_by('-count')[:3]
     tops=[]
     for post in likes:
@@ -19,7 +19,7 @@ def index(request):
 
     featured = Featured.objects.all()
     
-    return render(request, 'blog/index.html',{'posts':posts,'featured':featured,'tops':tops,'likes':likes})
+    return render(request, 'blog/index.html',{'posts':posts,'featured':featured,'tops':tops,'likes':likes,'categories':categories})
 
 
 # all blogs page
@@ -42,7 +42,7 @@ def blogFilter(request, id):
 
 
 # filter single post
-def single(request, id):
+def singlePost(request, id):
     post = Post.objects.get(id=id)
     comments = Comment.objects.filter(comment_on=id)
     counts = Comment.objects.filter(comment_on = id).values('comment_on').annotate(count=Count('comment_by'))
@@ -62,7 +62,7 @@ def single(request, id):
 
 
 # create post
-def create(request):
+def createPost(request):
     if request.user.is_authenticated:
         if request.method == 'POST' and request.FILES['image']:
             title = request.POST['title']
@@ -80,7 +80,7 @@ def create(request):
 
 
 # edit post
-def edit(request, id):
+def editPost(request, id):
     if request.user.is_authenticated:
         post = Post.objects.get(id=id)
         if request.method == 'POST':
@@ -109,7 +109,7 @@ def edit(request, id):
 
 
 # delete post
-def delete(request, id):
+def deletePost(request, id):
     if request.user.is_authenticated:
         post = Post.objects.get(id=id)
         if int(request.user.id) != int(post.author_id):
@@ -128,7 +128,7 @@ def yourBlog(request):
     
 
 # blogs of an author
-def profile(request,id):
+def authorProfile(request,id):
     author = User.objects.get(id=id)
     posts = Post.objects.filter(author_id=id)
     return render(request,'blog/profile.html',{'posts':posts,'author':author})

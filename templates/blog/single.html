@@ -50,7 +50,7 @@
                         </li>
 
                         <li class="author-m">
-                            By <span class="vcard author"><span class="fn"><a href="/blog/profile/{{post.author_id}}"
+                            By <span class="vcard author"><span class="fn"><a href="{% url 'author' id=post.author_id %}"
                                         title="Posts by {{post.author}}" rel="author">{{post.author}}</a></span></span>
                         </li>
 
@@ -93,7 +93,7 @@
                                     class="i">Prev</span></a></span>
                     </li>
                     <li class="share-link">
-                        <a href="/blog/like/{{post.id}}">
+                        <a href="{% url 'likepost' id=post.id %}">
                             {% if like == 'True' %}
                             <i class="fa fa-thumbs-down"></i>
                             {% else %}
@@ -142,7 +142,7 @@
                     <aside class="related post has-post-thumbnail">
 
                         <span class="post-image">
-                            <a href="/blog/single/{{post.id}}" title="{{post.title}}">
+                            <a href="{% url 'single' id=post.id %}" title="{{post.title}}">
                                 <img width="468" height="468" src="{{post.image.url}}" alt=""></a>
                         </span>
 
@@ -187,9 +187,9 @@
                                     {% if user.id == post.author_id %}
                                         {% if user.id == comment.comment_by_id %}
                                             <a style="cursor: pointer;" onclick="toggle('{{comment.id}}');">Edit</a> &nbsp
-                                            <a href="/blog/deleteComment/{{comment.id}}#comments">Delete</a>
+                                            <a href="{% url 'deleteComment' id=comment.id %}#comments">Delete</a>
                                             <div class="hide" id="field_{{comment.id}}" style="width: 50%;">
-                                                <form method="post" action="/blog/editComment/{{comment.id}}">
+                                                <form method="post" action="{% url 'editComment' id=comment.id %}">
                                                     {% csrf_token %}
                                                     <div style="width: 80%; float:left; bottom: 0;">
                                                         <input type="text" name="comment" id="comment" value="{{comment.comment}}">
@@ -200,13 +200,13 @@
                                                 </form>
                                             </div>
                                         {% else %}
-                                            <a href="/blog/deleteComment/{{comment.id}}#comments">Delete</a>
+                                            <a href="{% url 'deleteComment' id=comment.id %}#comments">Delete</a>
                                         {% endif %}
                                     {% elif user.id == comment.comment_by_id %}
                                         <a style="cursor: pointer;" onclick="toggle('{{comment.id}}')">Edit</a> &nbsp
-                                        <a href="/blog/deleteComment/{{comment.id}}#comments">Delete</a>
+                                        <a href="{% url 'deleteComment' id=comment.id %}#comments">Delete</a>
                                         <div class="hide" id="field_{{comment.id}}" style="width: 50%;">
-                                            <form method="post" action="/blog/editComment/{{comment.id}}">
+                                            <form method="post" action="{% url 'editComment' id=comment.id %}">
                                                 {% csrf_token %}
                                                 <div style="width: 80%; float:left; bottom: 0;">
                                                     <input type="text" name="comment" id="comment" value="{{comment.comment}}">
