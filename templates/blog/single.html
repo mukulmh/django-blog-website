@@ -3,8 +3,9 @@
 {% block content %}
 
 <script>
-    function clickMe() {
-        var text = document.getElementById("field");
+    function toggle(id) {
+        console.log(id)
+        var text = document.getElementById("field_"+ id);
         text.classList.toggle("hide");
         text.classList.toggle("show");
     }
@@ -40,6 +41,12 @@
                                 {{c.count}}
                                 {% endfor %}
                                 Comments</a>
+                        </li>
+                        <li class="likes">
+                            {% for like in likes %}
+                            <a>{{like.count}}</a>
+                            {% endfor %}
+                            Likes
                         </li>
 
                         <li class="author-m">
@@ -179,9 +186,9 @@
                                 {% if user.is_authenticated %}
                                     {% if user.id == post.author_id %}
                                         {% if user.id == comment.comment_by_id %}
-                                            <a style="cursor: pointer;" onclick="clickMe()">Edit</a> &nbsp
-                                            <a href="/blog/deleteComment/{{comment.id}}">Delete</a>
-                                            <div class="hide" id="field" style="width: 50%;">
+                                            <a style="cursor: pointer;" onclick="toggle('{{comment.id}}');">Edit</a> &nbsp
+                                            <a href="/blog/deleteComment/{{comment.id}}#comments">Delete</a>
+                                            <div class="hide" id="field_{{comment.id}}" style="width: 50%;">
                                                 <form method="post" action="/blog/editComment/{{comment.id}}">
                                                     {% csrf_token %}
                                                     <div style="width: 80%; float:left; bottom: 0;">
@@ -191,15 +198,14 @@
                                                         <button type="submit" style="height: 3px; width: 5px; align-items:center;">Save</button>
                                                     </div>
                                                 </form>
-                                                
                                             </div>
                                         {% else %}
-                                            <a href="/blog/deleteComment/{{comment.id}}">Delete</a>
+                                            <a href="/blog/deleteComment/{{comment.id}}#comments">Delete</a>
                                         {% endif %}
                                     {% elif user.id == comment.comment_by_id %}
-                                        <a style="cursor: pointer;" onclick="clickMe()">Edit</a> &nbsp
-                                        <a href="/blog/deleteComment/{{comment.id}}">Delete</a>
-                                        <div class="hide" id="field" style="width: 50%;">
+                                        <a style="cursor: pointer;" onclick="toggle('{{comment.id}}')">Edit</a> &nbsp
+                                        <a href="/blog/deleteComment/{{comment.id}}#comments">Delete</a>
+                                        <div class="hide" id="field_{{comment.id}}" style="width: 50%;">
                                             <form method="post" action="/blog/editComment/{{comment.id}}">
                                                 {% csrf_token %}
                                                 <div style="width: 80%; float:left; bottom: 0;">
@@ -213,14 +219,9 @@
                                     {% endif %}
                                 {% endif %}
                             </p>
-
                         </div>
-
                         {% endfor %}
                     </div>
-
-                    <aside class="comments">
-                    </aside>
 
                     <div id="respond" class="comment-respond">
                         {% if user.is_authenticated %}
@@ -233,7 +234,6 @@
                                     class="required">*</span></p>
                             <p><label for="comment">Comment</label><textarea id="comment" name="comment" cols="45"
                                     rows="8" aria-required="true" placeholder="Comment"></textarea></p>
-                            <input type="hidden" name="back" value="{{ request.path }}">
                             <p class="form-submit"><input name="submit" type="submit" id="submit" class="submit"
                                     value="Post Comment"></p>
                         </form>

@@ -19,7 +19,7 @@ def index(request):
 
     featured = Featured.objects.all()
     
-    return render(request, 'blog/index.html',{'posts':posts,'featured':featured,'tops':tops})
+    return render(request, 'blog/index.html',{'posts':posts,'featured':featured,'tops':tops,'likes':likes})
 
 
 # all blogs page
@@ -46,6 +46,8 @@ def single(request, id):
     post = Post.objects.get(id=id)
     comments = Comment.objects.filter(comment_on=id)
     counts = Comment.objects.filter(comment_on = id).values('comment_on').annotate(count=Count('comment_by'))
+    likes = Like.objects.filter(liked_on_id = id).values('liked_on').annotate(count=Count('liked_by')).order_by('-count')
+    
     like = Like.objects.filter(liked_by_id=request.user.id, liked_on_id = id)
     if like.exists():
         like = 'True'
@@ -53,11 +55,10 @@ def single(request, id):
         if request.user.is_authenticated:
             comment = request.POST['comment']
             query = Comment(comment=comment,comment_by=request.user, comment_on=post)
-            back = request.POST.get('back', '/')
             query.save()
-            return redirect(back)
+            return redirect('single', id = id)
     related = Post.objects.filter(category_id=post.category_id)[:3]
-    return render(request,'blog/single.html',{'post':post, 'related':related, 'comments':comments, 'counts':counts, 'like':like})
+    return render(request,'blog/single.html',{'post':post, 'related':related, 'comments':comments, 'counts':counts, 'like':like,'likes':likes})
 
 
 # create post
@@ -162,12 +163,12 @@ def setting(request):
 # delete comment
 def deleteComment(request, id):
     if request.user.is_authenticated:
-        comment = Comment.objects.filter(id = id)
-        for c in comment:
-            pid = c.comment_on_id
-        if comment.exists():
+        comment = Comment.objects.get(id = id)
+        if request.user.id == comment.comment_by_id:
+            pid = comment.comment_on_id
             comment.delete()
             return redirect('single', pid)
+        return redirect('yourblog')
     return redirect('index')
 
 
@@ -175,7 +176,8 @@ def deleteComment(request, id):
 def editComment(request, id):
     if request.user.is_authenticated:
         comment = Comment.objects.get(id=id)
-        comment.comment = request.POST['comment']
-        comment.save()
+        if request.user.id == comment.comment_by_id:
+            comment.comment = request.POST['comment']
+            comment.save()
         return redirect('single', comment.comment_on_id)
     return redirect('index')
