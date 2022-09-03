@@ -56,6 +56,7 @@ def singlePost(request, id):
             comment = request.POST['comment']
             query = Comment(comment=comment,comment_by=request.user, comment_on=post)
             query.save()
+            messages.success(request, 'Your comment has been posted!')
             return redirect('single', id = id)
     related = Post.objects.filter(category_id=post.category_id)[:3]
     return render(request,'blog/single.html',{'post':post, 'related':related, 'comments':comments, 'counts':counts, 'like':like,'likes':likes})
@@ -74,6 +75,7 @@ def createPost(request):
             author = request.user.id
             post = Post(title=title, description=description, category_id=category, author_id = author, image=image)
             post.save()
+            messages.success(request, 'Your blog has been posted!')
         categories = Category.objects.all()
         return render(request, 'blog/create.html',{'categories':categories})
     return redirect('index')
@@ -93,6 +95,7 @@ def editPost(request, id):
                 post.image = fs.save(file.name, file)
                 post.author_id = request.user.id
                 post.save()
+                messages.success(request, 'Your post has been updated!')
                 return redirect('yourblog')
             else:
                 post.title = request.POST['title']
@@ -100,6 +103,7 @@ def editPost(request, id):
                 post.category_id = request.POST.get('category')
                 post.author_id = request.user.id
                 post.save()
+                messages.success(request, 'Your post has been updated!')
                 return redirect('yourblog')
         if int(request.user.id) != int(post.author_id):
             return redirect('index')
@@ -115,6 +119,7 @@ def deletePost(request, id):
         if int(request.user.id) != int(post.author_id):
             return redirect('index')
         post.delete()
+        messages.success(request, 'Your post has been deleted!')
         return redirect('yourblog')
     return redirect('index')
 
@@ -152,6 +157,7 @@ def likepost(request, id):
             return redirect('single', id=id)
         click = Like(liked_by_id = request.user.id, liked_on_id = id)
         click.save()
+        messages.success(request, 'You liked this post!')
         return redirect('single', id=id)
         
 
@@ -163,11 +169,14 @@ def setting(request):
 # delete comment
 def deleteComment(request, id):
     if request.user.is_authenticated:
-        comment = Comment.objects.get(id = id)
-        if request.user.id == comment.comment_by_id:
-            pid = comment.comment_on_id
+        comment = Comment.objects.select_related('comment_on__author').get(id=id)
+        pid = comment.comment_on
+        puid = pid.author
+        # print(comment.comment_by.id)
+        if request.user.id == comment.comment_by.id or request.user.id == puid:
             comment.delete()
-            return redirect('single', pid)
+            messages.success(request, 'Your comment has been deleted!')
+            return redirect('single', pid.id)
         return redirect('yourblog')
     return redirect('index')
 
@@ -179,5 +188,6 @@ def editComment(request, id):
         if request.user.id == comment.comment_by_id:
             comment.comment = request.POST['comment']
             comment.save()
+            messages.success(request, 'Your comment has been updated!')
         return redirect('single', comment.comment_on_id)
     return redirect('index')

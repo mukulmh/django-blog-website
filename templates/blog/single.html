@@ -5,15 +5,23 @@
 <script>
     function toggle(id) {
         console.log(id)
-        var text = document.getElementById("field_"+ id);
+        var text = document.getElementById("field_" + id);
         text.classList.toggle("hide");
         text.classList.toggle("show");
     }
 </script>
 <style>
-    .hide{display: none;}
-    .show{display: block;}
-    .mybutton{cursor: pointer;}
+    .hide {
+        display: none;
+    }
+
+    .show {
+        display: block;
+    }
+
+    .mybutton {
+        cursor: pointer;
+    }
 </style>
 
 <div class="wrap full-wrap">
@@ -50,8 +58,9 @@
                         </li>
 
                         <li class="author-m">
-                            By <span class="vcard author"><span class="fn"><a href="{% url 'author' id=post.author_id %}"
-                                        title="Posts by {{post.author}}" rel="author">{{post.author}}</a></span></span>
+                            By <span class="vcard author"><span class="fn"><a
+                                        href="{% url 'author' id=post.author_id %}" title="Posts by {{post.author}}"
+                                        rel="author">{{post.author}}</a></span></span>
                         </li>
 
                     </ul>
@@ -184,40 +193,42 @@
                         <div>
                             <p><a>{{comment.comment_by}}</a> &nbsp {{comment.comment}} &nbsp
                                 {% if user.is_authenticated %}
-                                    {% if user.id == post.author_id %}
-                                        {% if user.id == comment.comment_by_id %}
-                                            <a style="cursor: pointer;" onclick="toggle('{{comment.id}}');">Edit</a> &nbsp
-                                            <a href="{% url 'deleteComment' id=comment.id %}#comments">Delete</a>
-                                            <div class="hide" id="field_{{comment.id}}" style="width: 50%;">
-                                                <form method="post" action="{% url 'editComment' id=comment.id %}">
-                                                    {% csrf_token %}
-                                                    <div style="width: 80%; float:left; bottom: 0;">
-                                                        <input type="text" name="comment" id="comment" value="{{comment.comment}}">
-                                                    </div>
-                                                    <div style="width: 17%; float:right;">
-                                                        <button type="submit" style="height: 3px; width: 5px; align-items:center;">Save</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        {% else %}
-                                            <a href="{% url 'deleteComment' id=comment.id %}#comments">Delete</a>
-                                        {% endif %}
-                                    {% elif user.id == comment.comment_by_id %}
-                                        <a style="cursor: pointer;" onclick="toggle('{{comment.id}}')">Edit</a> &nbsp
-                                        <a href="{% url 'deleteComment' id=comment.id %}#comments">Delete</a>
-                                        <div class="hide" id="field_{{comment.id}}" style="width: 50%;">
-                                            <form method="post" action="{% url 'editComment' id=comment.id %}">
-                                                {% csrf_token %}
-                                                <div style="width: 80%; float:left; bottom: 0;">
-                                                    <input type="text" name="comment" id="comment" value="{{comment.comment}}">
-                                                </div>
-                                                <div style="width: 17%; float:right;">
-                                                    <button type="submit" style="height: 3px; width: 5px; align-items:center;">Save</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    {% endif %}
-                                {% endif %}
+                                {% if user.id == post.author_id %}
+                                {% if user.id == comment.comment_by_id %}
+                                <a style="cursor: pointer;" onclick="toggle('{{comment.id}}');">Edit</a> &nbsp
+                                <a href="{% url 'deleteComment' id=comment.id %}#comments">Delete</a>
+                            <div class="hide" id="field_{{comment.id}}" style="width: 50%;">
+                                <form method="post" action="{% url 'editComment' id=comment.id %}">
+                                    {% csrf_token %}
+                                    <div style="width: 80%; float:left; bottom: 0;">
+                                        <input type="text" name="comment" id="comment" value="{{comment.comment}}">
+                                    </div>
+                                    <div style="width: 17%; float:right;">
+                                        <button type="submit"
+                                            style="height: 3px; width: 5px; align-items:center;">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                            {% else %}
+                            <a href="{% url 'deleteComment' id=comment.id %}#comments">Delete</a>
+                            {% endif %}
+                            {% elif user.id == comment.comment_by_id %}
+                            <a style="cursor: pointer;" onclick="toggle('{{comment.id}}')">Edit</a> &nbsp
+                            <a href="{% url 'deleteComment' id=comment.id %}#comments">Delete</a>
+                            <div class="hide" id="field_{{comment.id}}" style="width: 50%;">
+                                <form method="post" action="{% url 'editComment' id=comment.id %}">
+                                    {% csrf_token %}
+                                    <div style="width: 80%; float:left; bottom: 0;">
+                                        <input type="text" name="comment" id="comment" value="{{comment.comment}}">
+                                    </div>
+                                    <div style="width: 17%; float:right;">
+                                        <button type="submit"
+                                            style="height: 3px; width: 5px; align-items:center;">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                            {% endif %}
+                            {% endif %}
                             </p>
                         </div>
                         {% endfor %}

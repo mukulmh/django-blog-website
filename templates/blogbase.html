@@ -1,12 +1,6 @@
 {% load static %}
 
 <!doctype html>
-<!--
-	Itsy by FreeHTML5.co
-	Twitter: https://twitter.com/fh5co
-	Facebook: https://fb.com/fh5co
-	URL: https://freehtml5.co
--->
 <html class="home blog no-js" lang="en-US">
 
 <head>
@@ -20,14 +14,10 @@
         type="text/css" media="screen" />
     <link rel="stylesheet" href="{% static 'itsy/style.css' %}" type="text/css" media="screen" />
     <link rel="stylesheet" href="{% static 'itsy/print.css' %}" type="text/css" media="print" />
-    <!--[if (lt IE 9) & (!IEMobile)]>
-    <link rel="stylesheet" id="lt-ie9-css" href="css/ie.css" type="text/css" media="screen"/>
-    <![endif]-->
     <script src="{% static 'itsy/js/jquery-3.0.0.min.js' %}"></script>
     <script src="{% static 'itsy/js/jquery-migrate-3.0.1.min.js' %}"></script>
-    <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+
+
 </head>
 
 <body class="home sticky-menu sidebar-off" id="top">
@@ -105,9 +95,10 @@
             <a href="#topsearch" class="search-trigger"><i class="fa fa-search"></i></a>
 
         </div>
-
     </header>
-
+    {% for msg in messages %}
+    <div class="status ok" style="margin-top: 60px;">{{msg}}</div>
+    {% endfor %}
     {% block content %}
 
     {% endblock %}
@@ -149,7 +140,8 @@
                 <ul>
                     {% for category in categories %}
                     <li class="cat-item cat-item-6">
-                        <a href="{% url 'blogfilter' id=category.id %}" title="A cute little description would go in here">{{category.name}}</a>
+                        <a href="{% url 'blogfilter' id=category.id %}"
+                            title="A cute little description would go in here">{{category.name}}</a>
                     </li>
                     {% endfor %}
                 </ul>
@@ -189,11 +181,7 @@
         <a href="#topsearch" class="search-trigger"><i class="fa fa-times"></i></a>
     </div>
 
-
     <script>var ie9 = false;</script>
-    <!--[if lte IE 9 ]>
-<script> var ie9 = true; </script>
-<![endif]-->
     <script src="{% static 'itsy/js/global-plugins.min.js' %}"></script>
     <script src="{% static 'itsy/js/main.js' %}"></script>
 </body>
