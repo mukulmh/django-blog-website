@@ -1,9 +1,12 @@
 from django.shortcuts import render,redirect
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.models import User
+from Auth.models import Account
 from django.contrib import auth, messages
 from django.db.models import Count
 from .models import Category, Comment, Featured, Like, Post
+
+
 
 # Create your views here.
 
@@ -134,7 +137,7 @@ def yourBlog(request):
 
 # blogs of an author
 def authorProfile(request,id):
-    author = User.objects.get(id=id)
+    author = Account.objects.get(id=id)
     posts = Post.objects.filter(author_id=id)
     return render(request,'blog/profile.html',{'posts':posts,'author':author})
     

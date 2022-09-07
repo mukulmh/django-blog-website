@@ -10,13 +10,9 @@
                 <div class="inner">
                     <h1>About me</h1>
                     <div class="post-content">
-                        <p><img class="size-full alignleft rounded" src="{% static 'itsy/images/about-me.jpg' %}"
+                        <p><img class="size-full alignleft rounded" src="{{user.image.url}}"
                                 alt="about-clare" width="300" height="300">
-                            Hi, my name is Clare and I’m a serial blogger. I love life and more than anything in the
-                            whole wide world, I love taking photographs.</p>
-                        <p>Oh and did I mention, I quite like blogging?</p>
-                        <p>I’m an aspring photographer and this is my little corner of the world, so take a look around
-                            and let me know what you think… I’m on these little social networks too…</p>
+                            {{user.bio}}
                         <p>
                             <a target="_self" class="social twitter black" href="#"> Twitter </a>
                             <a target="_self" class="social facebook black" href="#"> Facebook&nbsp;</a>

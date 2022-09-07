@@ -40,7 +40,7 @@
                 <ul class="meta top">
                     <li class="time">
                         <a href="{% url 'author' id=post.author_id %}" title="{{post.author}}">
-                            <time class="post-date updated">By: {{post.author}}</time>
+                            <time class="post-date updated">By: {{post.author.username}}</time>
                         </a>
                     </li>
                 </ul>
@@ -150,9 +150,9 @@
                             </li>
 
                             <li class="author-m post-tags">
-                                By <span class="vcard author post-author"><span class="fn"><a
+                                By: <span class="vcard author post-author"><span class="fn"><a
                                             href="{% url 'author' id=post.author_id %}" title="Posts by Clare Smith"
-                                            rel="author">{{post.author}}</a></span></span>
+                                            rel="author">{{post.author.username}}</a></span></span>
                             </li>
 
                         </ul>

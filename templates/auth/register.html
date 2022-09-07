@@ -21,6 +21,7 @@
                         <div class="card card-plain">
                             <div class="card-header">
                                 <h4 class="font-weight-bolder">Sign Up</h4>
+                                <p class="mb-0">Required fields are marked *</p>
                             </div>
 
                             {% for message in messages %}
@@ -33,29 +34,24 @@
                                 <form role="form" method="post">
                                     {% csrf_token %}
                                     <div class="input-group input-group-outline mb-3">
-                                        <label class="form-label">Firstname</label>
-                                        <input type="text" class="form-control" id="firstname" name="firstname"
-                                            required>
+                                        <label class="form-label">Phone No *</label>
+                                        <input type="text" class="form-control" id="phone" name="phone" required>
                                     </div>
                                     <div class="input-group input-group-outline mb-3">
-                                        <label class="form-label">Lastname</label>
-                                        <input type="text" class="form-control" id="lastname" name="lastname" required>
-                                    </div>
-                                    <div class="input-group input-group-outline mb-3">
-                                        <label class="form-label">Username</label>
+                                        <label class="form-label">Username *</label>
                                         <input type="text" class="form-control" id="username" name="username" required>
                                     </div>
                                     <div class="input-group input-group-outline mb-3">
-                                        <label class="form-label">Email</label>
+                                        <label class="form-label">Email *</label>
                                         <input type="text" class="form-control" id="email" name="email" required>
                                     </div>
                                     <div class="input-group input-group-outline mb-3">
-                                        <label class="form-label">Password</label>
+                                        <label class="form-label">Password *</label>
                                         <input type="password" class="form-control" id="password1" name="password1"
                                             required>
                                     </div>
                                     <div class="input-group input-group-outline mb-3">
-                                        <label class="form-label">Confirm Password</label>
+                                        <label class="form-label">Confirm Password *</label>
                                         <input type="password" class="form-control" id="password2" name="password2"
                                             required>
                                     </div>
@@ -63,8 +59,7 @@
                                         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
                                             checked>
                                         <label class="form-check-label" for="flexCheckDefault">
-                                            I agree the <a href="javascript:;"
-                                                class="text-dark font-weight-bolder">Terms and Conditions</a>
+                                            I agree the <a class="text-dark font-weight-bolder">Terms and Conditions</a>
                                         </label>
                                     </div>
                                     <div class="text-center">
