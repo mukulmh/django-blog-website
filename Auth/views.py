@@ -70,7 +70,7 @@ def logout(request):
 def resetpassword(request):
     if request.method == 'POST':
         phone = request.POST['phone']
-        user = Account.objects.get(phone=phone)
+        user = Account.objects.filter(phone=phone).first()
         if user is not None:
             request.session['phone'] = phone
             code = random.randint(0,999999)
@@ -78,6 +78,7 @@ def resetpassword(request):
             if query is not None:
                 query.code = code
                 query.save()
+                
                 subject = 'Password reset code'
                 message = 'Your password reset code is {code}. If you are not expecting this email then please ignore.'.format(code=code)
                 from_email = settings.EMAIL_HOST_USER
@@ -86,6 +87,12 @@ def resetpassword(request):
             else:
                 query = ResetCode(code = code, phone_id = phone)
                 query.save()
+                
+                subject = 'Password reset code'
+                message = 'Your password reset code is {code}. If you are not expecting this email then please ignore.'.format(code=code)
+                from_email = settings.EMAIL_HOST_USER
+                recipient_list = [user.email,]
+                send_mail(subject, message, from_email,recipient_list)
             return redirect('checkresetcode')
         messages.info(request, 'Phone no is not registered!')
 
